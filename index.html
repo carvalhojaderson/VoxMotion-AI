@@ -19,6 +19,8 @@
             --glass-border: rgba(255, 255, 255, 0.1);
             --text: #f8fafc;
             --text-muted: #94a3b8;
+            --warning: #f59e0b;
+            --warning-bg: rgba(245, 158, 11, 0.1);
         }
 
         * {
@@ -42,6 +44,70 @@
         h1, h2, h3, h4 {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
+        }
+
+        /* Development Banner */
+        .dev-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(90deg, var(--warning-bg), rgba(245, 158, 11, 0.2), var(--warning-bg));
+            border-bottom: 1px solid var(--warning);
+            padding: 0.75rem;
+            text-align: center;
+            z-index: 10000;
+            backdrop-filter: blur(10px);
+            animation: bannerPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes bannerPulse {
+            0%, 100% { background: linear-gradient(90deg, var(--warning-bg), rgba(245, 158, 11, 0.2), var(--warning-bg)); }
+            50% { background: linear-gradient(90deg, rgba(245, 158, 11, 0.2), var(--warning-bg), rgba(245, 158, 11, 0.2)); }
+        }
+
+        .dev-banner-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .dev-badge {
+            background: var(--warning);
+            color: var(--dark);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .dev-text {
+            color: var(--warning);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .dev-contact {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px dashed var(--warning);
+            transition: all 0.3s ease;
+        }
+
+        .dev-contact:hover {
+            color: var(--warning);
+            border-bottom-style: solid;
         }
 
         /* Background Animation */
@@ -78,10 +144,10 @@
             100% { transform: translate(50px, 50px); }
         }
 
-        /* Navigation */
+        /* Navigation - Ajustado para o banner */
         nav {
             position: fixed;
-            top: 0;
+            top: 50px; /* Ajustado para o banner */
             width: 100%;
             z-index: 1000;
             padding: 1rem 5%;
@@ -94,6 +160,7 @@
         nav.scrolled {
             padding: 0.8rem 5%;
             background: rgba(15, 15, 26, 0.95);
+            top: 50px;
         }
 
         .nav-container {
@@ -227,14 +294,14 @@
             transition: all 0.3s ease;
         }
 
-        /* Hero Section */
+        /* Hero Section - Ajustado para o banner */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            padding: 120px 5% 80px;
+            padding: 170px 5% 80px; /* Aumentado top para o banner */
             overflow: hidden;
         }
 
@@ -272,11 +339,6 @@
             background: var(--accent);
             border-radius: 50%;
             animation: blink 2s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
         }
 
         .hero h1 {
@@ -373,16 +435,37 @@
             width: 100%;
             height: 100%;
             background: 
-                linear-gradient(45deg, transparent 48%, rgba(34, 211, 238, 0.1) 50%, transparent 52%),
-                linear-gradient(-45deg, transparent 48%, rgba(99, 102, 241, 0.1) 50%, transparent 52%);
-            background-size: 20px 20px;
+                linear-gradient(45deg, transparent 48%, rgba(34, 211, 238, 0.2) 50%, transparent 52%),
+                linear-gradient(-45deg, transparent 48%, rgba(99, 102, 241, 0.2) 50%, transparent 52%);
+            background-size: 30px 30px;
             animation: skeletonMove 3s linear infinite;
             pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .skeleton-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(34, 211, 238, 0.4) 2px, transparent 2px),
+                radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.4) 2px, transparent 2px),
+                radial-gradient(circle at 80% 70%, rgba(192, 132, 252, 0.4) 2px, transparent 2px),
+                radial-gradient(circle at 30% 80%, rgba(34, 211, 238, 0.3) 2px, transparent 2px),
+                radial-gradient(circle at 70% 20%, rgba(99, 102, 241, 0.3) 2px, transparent 2px);
+            animation: jointPulse 2s ease-in-out infinite;
         }
 
         @keyframes skeletonMove {
             0% { transform: translate(0, 0); }
-            100% { transform: translate(20px, 20px); }
+            100% { transform: translate(30px, 30px); }
+        }
+
+        @keyframes jointPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
         }
 
         .floating-card {
@@ -819,6 +902,19 @@
             animation: pulse 4s ease-in-out infinite;
         }
 
+        .email-highlight {
+            display: inline-block;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            margin-top: 1rem;
+            font-family: 'Space Grotesk', monospace;
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
         /* Footer */
         footer {
             background: var(--dark);
@@ -865,6 +961,26 @@
 
         /* Responsive */
         @media (max-width: 968px) {
+            .dev-banner {
+                padding: 0.5rem;
+            }
+            
+            .dev-text {
+                font-size: 0.8rem;
+            }
+
+            nav {
+                top: 60px;
+            }
+
+            nav.scrolled {
+                top: 60px;
+            }
+
+            .hero {
+                padding: 180px 5% 80px;
+            }
+
             .nav-links {
                 display: none;
             }
@@ -923,6 +1039,15 @@
     </style>
 </head>
 <body>
+    <!-- Development Banner -->
+    <div class="dev-banner">
+        <div class="dev-banner-content">
+            <span class="dev-badge">🚧 Em Desenvolvimento</span>
+            <span class="dev-text">Esta plataforma está em fase de desenvolvimento. Para mais informações:</span>
+            <a href="mailto:carvalhojaderson@gmail.com" class="dev-contact">carvalhojaderson@gmail.com</a>
+        </div>
+    </div>
+
     <!-- Background Animation -->
     <div class="bg-animation"></div>
 
@@ -971,10 +1096,12 @@
             </div>
             <div class="hero-visual">
                 <div class="hero-image-container">
-                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop" 
-                         alt="Atleta em movimento com análise biomecânica" 
+                    <!-- Imagem de dançarino com análise de movimento -->
+                    <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=800&h=600&fit=crop" 
+                         alt="Bailarino com análise biomecânica em tempo real" 
                          class="hero-image">
                     <div class="skeleton-overlay"></div>
+                    <div class="skeleton-lines"></div>
                 </div>
                 <div class="floating-card">
                     <div class="card-icon">📱</div>
@@ -1039,8 +1166,9 @@
         <div class="container">
             <div class="unicamp-content">
                 <div class="unicamp-visual">
-                    <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=800&h=600&fit=crop" 
-                         alt="Laboratório UNICAMP" 
+                    <!-- Imagem de laboratório com análise de dança -->
+                    <img src="https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=800&h=600&fit=crop" 
+                         alt="Estúdio de captura de movimento com bailarino" 
                          class="unicamp-image">
                     <div class="stats-grid">
                         <div class="stat-card">
@@ -1218,8 +1346,13 @@
                 <button class="btn-primary" style="font-size: 1.1rem; padding: 1.2rem 3rem;" onclick="showContactForm()">
                     Solicitar Demo Gratuita →
                 </button>
+                
+                <div class="email-highlight">
+                    📧 carvalhojaderson@gmail.com
+                </div>
+                
                 <p style="margin-top: 2rem; color: var(--text-muted); font-size: 0.9rem;">
-                    ou envie um email para <a href="mailto:contato@voxmotion.ai" style="color: var(--accent); text-decoration: none;">contato@voxmotion.ai</a>
+                    ou envie um email diretamente para <a href="mailto:carvalhojaderson@gmail.com" style="color: var(--accent); text-decoration: none; font-weight: 600;">carvalhojaderson@gmail.com</a>
                 </p>
             </div>
         </div>
@@ -1234,9 +1367,9 @@
             </div>
             <p>&copy; 2024 VoxMotion AI. Todos os direitos reservados.</p>
             <div class="social-links">
-                <a href="#">in</a>
-                <a href="#">tw</a>
-                <a href="#">ig</a>
+                <a href="mailto:carvalhojaderson@gmail.com" title="Email">✉️</a>
+                <a href="#" title="LinkedIn">in</a>
+                <a href="#" title="Instagram">ig</a>
             </div>
         </div>
     </footer>
@@ -1333,7 +1466,7 @@
         }
 
         function showContactForm() {
-            alert('Obrigado pelo interesse! Nossa equipe entrará em contato em breve para agendar sua demonstração personalizada.');
+            alert('Obrigado pelo interesse! Entre em contato através do email: carvalhojaderson@gmail.com');
         }
 
         function toggleMenu() {
